@@ -4,8 +4,8 @@
 import argparse
 import json
 import os.path
-import sys
 from datetime import date
+
 
 def add_worker(staff, name, post, year):
     """
@@ -14,9 +14,9 @@ def add_worker(staff, name, post, year):
 
     staff.append(
         {
-        "name": name,
-        "post": post,
-        "year": year
+            "name": name,
+            "post": post,
+            "year": year
         }
     )
 
@@ -41,10 +41,10 @@ def display_workers(staff):
         print(line)
         print(
             '| {:^4} | {:^30} | {:^20} | {:^8} |'.format(
-            "№",
-            "Ф.И.О.",
-            "Должность",
-            "Год"
+                "№",
+                "Ф.И.О.",
+                "Должность",
+                "Год"
             )
         )
         print(line)
@@ -53,10 +53,10 @@ def display_workers(staff):
         for idx, worker in enumerate(staff, 1):
             print(
                 '| {:>4} | {:<30} | {:<20} | {:>8} |'.format(
-                idx,
-                worker.get('name', ''),
-                worker.get('post', ''),
-                worker.get('year', 0)
+                    idx,
+                    worker.get('name', ''),
+                    worker.get('post', ''),
+                    worker.get('year', 0)
                 )
             )
             print(line)
@@ -120,7 +120,7 @@ def main(command_line=None):
         action="version",
         version="%(prog)s 0.1.0"
     )
-    
+
     subparsers = parser.add_subparsers(dest="command")
 
     # Создать субпарсер для добавления работника.
@@ -185,10 +185,10 @@ def main(command_line=None):
     # Добавить работника.
     if args.command == "add":
         workers = add_worker(
-        workers,
-        args.name,
-        args.post,
-        args.year
+            workers,
+            args.name,
+            args.post,
+            args.year
         )
         is_dirty = True
 
@@ -200,10 +200,11 @@ def main(command_line=None):
     elif args.command == "select":
         selected = select_workers(workers, args.period)
         display_workers(selected)
-        
+
     # Сохранить данные в файл, если список работников был изменен.
     if is_dirty:
         save_workers(args.filename, workers)
+
 
 if __name__ == "__main__":
     main()

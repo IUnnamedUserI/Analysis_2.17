@@ -2,10 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-import sys
 from datetime import datetime
-import argparse
-import os.path
 import click
 
 
@@ -20,12 +17,12 @@ def display(filename):
     """
     Функция (click) вывода списка существующих записей из указанного файла
     """
-    
+
     try:
         workers = load_file(filename)
         print_list(workers)
         print()
-    except:
+    except FileNotFoundError:
         print("Ошибка в имени файла\n")
 
 
@@ -65,7 +62,7 @@ def add_worker(workers, surname, name, phone, date):
     """
     Функция добавления новой записи, возвращает запись
     """
-        
+
     workers.append(
         {
             "surname": surname,
@@ -74,7 +71,7 @@ def add_worker(workers, surname, name, phone, date):
             'date': date
         }
     )
-    
+
     return workers
 
 
@@ -82,18 +79,18 @@ def print_list(list):
     """
     Функция выводит на экран список всех существующих записей
     """
-    
+
     for member in list:
         print(f"{member['surname']} {member['name']} | "
-                f"{member['phone']} | {member['date']}")
-        
+              f"{member['phone']} | {member['date']}")
+
 
 def find_member(workers, period):
     """
     Функция для вывода на экран всех записей, чьи фамилии совпадают
     с введённой (не возвращает никаких значений)
     """
-    
+
     count = 0
     members = []
 
@@ -123,7 +120,7 @@ def load_file(filename):
 
     with open(filename, "r", encoding="utf-8") as file:
         return json.load(file)
-    
+
 
 def parse_datetime(value):
     try:
